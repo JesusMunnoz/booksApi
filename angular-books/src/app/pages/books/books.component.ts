@@ -16,7 +16,48 @@ export class BooksComponent implements OnInit {
   
   constructor(private booksService: BooksService){}
 
-  getOneBook(filter: string){
+  ngOnInit(): void{
+    this.getAllBooks();
+  }
+
+  getAllBooks(): void {
+    this.booksService.getAll().subscribe(
+      (data: Book[]) => {
+        this.books = data;
+        this.filteredBooks = data;
+      },
+      error => console.error(error)
+    );
+  }
+
+  getOneBook(filter: string): void {
+    let id_book = Number(filter);
+    if (id_book) {
+      this.booksService.getOne(id_book).subscribe(
+        (book: Book) => {
+          this.filteredBooks = [book];
+        },
+        error => {
+          console.error(error);
+          this.filteredBooks = [];
+        }
+      );
+    } else {
+      this.filteredBooks = this.books;
+    }
+  }
+
+  deleteBook(id_book: number): void {
+    this.booksService.delete(id_book).subscribe(
+      () => {
+        this.books = this.books.filter(book => book.id_book !== id_book);
+        this.filteredBooks = this.books;
+      },
+      error => console.error(error)
+    );
+  }
+
+  /*getOneBook(filter: string){
     let id_book = Number(filter);
     if(id_book){
       let foundBook = this.booksService.getOne(id_book);
@@ -50,5 +91,5 @@ export class BooksComponent implements OnInit {
   ngOnInit(): void{
     this.books = this.booksService.getAll(); 
     this.filteredBooks = this.books;
-  }
+  }*/
 }

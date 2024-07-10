@@ -3,20 +3,26 @@ const Book = require("../models/book");
 let arrBooks = [];
 
 function getBooks (req, res){
-    res.json(arrBooks);
-};
+    let respuesta = {error: false, codigo: 200, data: arrBooks}
+    res.json(respuesta);
+    //res.json(arrBooks);
+}
 
 function createBooks (req, res) {
     let {title, type, author, price, photo, id_book, id_user} = req.body;
 
     if(arrBooks.some(book => book.id_book === id_book)){
-        return res.status(400).json({message: "ya existe libro"})
+        let repuesta = {error:true, codigo:400, mensaje: "ya existe libro"}
+        return res.status(400).json(repuesta);
+        //return res.status(400).json({message: "ya existe libro"})
     }
 
     let newBook = new Book (title, type, author, price, photo, id_book, id_user);
     arrBooks.push(newBook);
-    res.status(201).json(newBook);
-};
+    let respuesta = {error: false, codigo: 201, data: newBook};
+    res.status(201).json(respuesta);
+    //res.status(201).json(newBook);
+}
 
 function updateBooks (req, res) {
     let {id_book, title, type, author, price, photo} = req.body;
@@ -29,11 +35,15 @@ function updateBooks (req, res) {
         arrBooks[bookIndex].price = price;
         arrBooks[bookIndex].photo = photo;
 
-        res.json(arrBooks[bookIndex])
+        let respuesta = {error: false, codigo: 200, data: arrBooks[bookIndex]}
+        res.json(respuesta);
+        //res.json(arrBooks[bookIndex])
     }else{
-        res.status(404).json({message:"error, libro no encontrado"});
+        let respuesta = {error: true, codigo: 404, mensaje: "error, libro no encontrado"};
+        res.status(404).json(respuesta);
+        //res.status(404).json({message:"error, libro no encontrado"});
     }
-};
+}
 
 function deleteBooks (req, res) {
     let {id_book} = req.body;
@@ -42,19 +52,27 @@ function deleteBooks (req, res) {
     if (bookIndex !== -1){
         let deleteBook = arrBooks.splice(bookIndex, 1);
         
-        res.json(deleteBook[0]);
+        let respuesta = {error: false, codigo: 200, data: deleteBook[0]};
+        res.json(respuesta);
+        //res.json(deleteBook[0]);
     }else{
-        res.status(404).json({message:"error, libro no encontrado"});
+        let respuesta = {error: true, codigo: 404, mensaje: "error, libro no encontrado"};
+        res.status(404).json(respuesta);
+        //res.status(404).json({message:"error, libro no encontrado"});
     }
-};
+}
 
 function getBooksId(req, res) {
     let {id} = req.params;
     let book = arrBooks.find(book => book.id_book == parseInt(id));
     if (book){
-        res.json(book);
+        let respuesta = {error: false, codigo: 200, data: book};
+        res.json(respuesta);
+        //res.json(book);
     }else{
-        res.status(404).json({message: "error, libro no encontrado"})
+        let respuesta = {error: true, codigo: 404, mensaje: "error, libro no encontrado"};
+        res.status(404).json(respuesta);
+        //res.status(404).json({message: "error, libro no encontrado"})
     }
 }
 
