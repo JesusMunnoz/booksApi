@@ -5,7 +5,6 @@ let arrBooks = [];
 function getBooks (req, res){
     let respuesta = {error: false, codigo: 200, data: arrBooks}
     res.json(respuesta);
-    //res.json(arrBooks);
 }
 
 function createBooks (req, res) {
@@ -14,14 +13,12 @@ function createBooks (req, res) {
     if(arrBooks.some(book => book.id_book === id_book)){
         let repuesta = {error:true, codigo:400, mensaje: "ya existe libro"}
         return res.status(400).json(repuesta);
-        //return res.status(400).json({message: "ya existe libro"})
     }
 
     let newBook = new Book (title, type, author, price, photo, id_book, id_user);
     arrBooks.push(newBook);
     let respuesta = {error: false, codigo: 201, data: newBook};
     res.status(201).json(respuesta);
-    //res.status(201).json(newBook);
 }
 
 function updateBooks (req, res) {
@@ -37,11 +34,9 @@ function updateBooks (req, res) {
 
         let respuesta = {error: false, codigo: 200, data: arrBooks[bookIndex]}
         res.json(respuesta);
-        //res.json(arrBooks[bookIndex])
     }else{
         let respuesta = {error: true, codigo: 404, mensaje: "error, libro no encontrado"};
         res.status(404).json(respuesta);
-        //res.status(404).json({message:"error, libro no encontrado"});
     }
 }
 
@@ -54,11 +49,9 @@ function deleteBooks (req, res) {
         
         let respuesta = {error: false, codigo: 200, data: deleteBook[0]};
         res.json(respuesta);
-        //res.json(deleteBook[0]);
     }else{
         let respuesta = {error: true, codigo: 404, mensaje: "error, libro no encontrado"};
         res.status(404).json(respuesta);
-        //res.status(404).json({message:"error, libro no encontrado"});
     }
 }
 
@@ -68,11 +61,9 @@ function getBooksId(req, res) {
     if (book){
         let respuesta = {error: false, codigo: 200, data: book};
         res.json(respuesta);
-        //res.json(book);
     }else{
         let respuesta = {error: true, codigo: 404, mensaje: "error, libro no encontrado"};
         res.status(404).json(respuesta);
-        //res.status(404).json({message: "error, libro no encontrado"})
     }
 }
 
