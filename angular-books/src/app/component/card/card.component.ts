@@ -9,11 +9,9 @@ import { Book } from 'src/app/models/book';
 export class CardComponent {
   @Input() book: Book;
   @Input() index: number;
-  //@Output() delete = new EventEmitter<Book>();
-  @Output() delete = new EventEmitter<number>()
+  @Output() delete = new EventEmitter<Book>();
 
   onDelete(): void{
-    //this.delete.emit(this.book);
-    this.delete.emit(this.book.id_book);
+    this.delete.emit(this.book);
   }
 }

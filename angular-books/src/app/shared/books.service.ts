@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { Book } from '../models/book';
 import { HttpClient } from '@angular/common/http'; 
 import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,42 @@ import { Observable } from 'rxjs';
 
 export class BooksService {
 
-  private myUrl = 'http://localhost:3000/books';
+  public books: Book[]
+
+  private myApi = 'http://localhost:3000/books';
+
+  constructor(private http: HttpClient) {
+   }
+
+  public getAll(){
+    return this.http.get(this.myApi);
+  }
+
+  public getOne(id_book: number) {
+    return this.http.get(this.myApi + "/" + id_book);
+  }
+
+  public delete(id_book: number){
+    return this.http.delete(this.myApi, {body: {id_book}});
+  }
+
+  public add(book: Book) {
+    return this.http.post(this.myApi, book);
+  }
+
+  public edit(book: Book) {
+    return this.http.put(this.myApi, book);
+  }
+}*/
+
+import { Injectable } from '@angular/core';
+import { Book } from '../models/book';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class BooksService {
 
   private books: Book[] = [
     new Book("El capitán Alatriste", "Blada", "Arturo Perez-Reverte", 10.40, "https://www.aytosanlorenzo.es/wp-content/uploads/2020/04/phalbm25732285_w980h638c1.jpg", 0, 0),
@@ -20,29 +54,6 @@ export class BooksService {
     new Book("El Señor de los anillos", "Dura", "J. R. R. Tolkien", 65, "https://www.aytosanlorenzo.es/wp-content/uploads/2020/04/phalbm25732285_w980h638c1.jpg", 4, 4)
   ]
 
-  getAll(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.myUrl);
-  }
-
-  getOne(id_book: number): Observable<Book> {
-    return this.http.get<Book>(`${this.myUrl}/${id_book}`);
-  }
-
-  add(book: Book): Observable<Book> {
-    return this.http.post<Book>(this.myUrl, book);
-  }
-
-  edit(book: Book): Observable<Book> {
-    return this.http.put<Book>(`${this.myUrl}/${book.id_book}`, book);
-  }
-
-  delete(id_book: number): Observable<void> {
-    return this.http.delete<void>(`${this.myUrl}/${id_book}`);
-  }
-  
-  constructor(private http:HttpClient) { }
-
-  /*
   public getAll(): Book[]{
     return this.books;
   }
@@ -93,5 +104,7 @@ export class BooksService {
       return true;
     }
     return false;
-  }*/
+  }
+
+  constructor() { }
 }

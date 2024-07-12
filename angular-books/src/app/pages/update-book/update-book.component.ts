@@ -29,3 +29,4 @@ export class UpdateBookComponent implements OnInit{
     this.editbook = this.booksService.getAll();
   }
 }
+  
