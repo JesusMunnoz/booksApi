@@ -8,6 +8,35 @@ import { Router } from '@angular/router';
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.css']
 })
+export class AddBookComponent {
+
+  constructor(private booksService: BooksService, private router: Router) {}
+
+  add(insrtName: string, insrtTapa: string, insrtAutor: string, insrtPrecio: number, insrtPhoto: string, insrtCode: number): void {
+    let newBook = new Book(insrtName, insrtTapa, insrtAutor, insrtPrecio, insrtPhoto, insrtCode);
+    this.booksService.add(newBook).subscribe({
+      next: (response) => {
+        console.log('Book anadido:', response);
+        this.router.navigateByUrl("/books");
+      },
+      error: (err) => {
+        console.error('Error anadiendo book:', err);
+      }
+    });
+  }
+}
+
+/*
+import { Component, OnInit } from '@angular/core';
+import { Book } from 'src/app/models/book';
+import { BooksService } from 'src/app/shared/books.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-add-book',
+  templateUrl: './add-book.component.html',
+  styleUrls: ['./add-book.component.css']
+})
 export class AddBookComponent implements OnInit {
 
   public addbooks: Book[];
@@ -26,3 +55,4 @@ export class AddBookComponent implements OnInit {
     this.addbooks = this.booksService.getAll()
   }
 }
+  */
